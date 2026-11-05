@@ -1,0 +1,29 @@
+{
+  "name": "cooklist",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000c\u0000o\u0000o\u0000k\u0000l\u0000i\u0000s\u0000t\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "start": "tsx src/index.ts",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/choco3a/cooklist.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/choco3a/cooklist/issues"
+  },
+  "homepage": "https://github.com/choco3a/cooklist#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6"
+  }
+}
