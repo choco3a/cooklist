@@ -4,3 +4,43 @@ body {
   background-color: #000;
   color: #fff;
 }
+
+header {
+  display: flex;
+}
+#addresipe {
+  height:30px;
+}
+
+
+main {
+  display: flex;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+#recipememo {
+  /* width: 100vw;
+  height:100vh; */
+  box-sizing: border-box;
+  resize:none;
+}
+
+#recipememo {
+  background-color: #fff;
+  color:#000;
+  width: 500px;
+  height: 400px;
+}
+
+#recipememo img {
+  max-width: 100px;
+  height: 100%;
+}
+
+.current-recipe {
+  background-color: aqua;
+}
