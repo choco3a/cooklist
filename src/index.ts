@@ -27,6 +27,7 @@ app.innerHTML =`
       <p>
         <label for="url1">URL</label>
         <input id="url1" type="url" class='target-class' placeholder="https://..." />
+        <a id="url-link" target="_blank" rel="noopener noreferrer"></a>
       </p>
       <div id='recipememo' class='target-class' contenteditable='true'></div>
     </div>
@@ -39,7 +40,9 @@ const addrecipe = getElement<HTMLButtonElement>('#addrecipe');
 const recipelist = getElement<HTMLUListElement>('#recipe-list');
 const title = getElement<HTMLInputElement>('#title');
 const url1 = getElement<HTMLInputElement>('#url1');
+const urlLink = getElement<HTMLAnchorElement>('#url-link');
 const recipememo = getElement<HTMLDivElement>('#recipememo');
+
 
 type Recipe = {
   id: number,
@@ -54,7 +57,7 @@ const recipes: Recipe [] = JSON.parse(localStorage.getItem(STORAGE_KEY) ??'[]');
 
 let selectedId: number | null = null;
 
-function saveResipes() {
+function saveRecipes() {
   localStorage.setItem(STORAGE_KEY,JSON.stringify(recipes));
 }
 
@@ -68,7 +71,7 @@ function saveCurrentRecipe() {
   recipe.url = url1.value;
   recipe.memo = recipememo.innerHTML;
 
-  saveResipes();
+  saveRecipes();
   renderList();
 }
 
@@ -77,6 +80,16 @@ function showRecipe(recipe: Recipe) {
   title.value = recipe.title;
   url1.value = recipe.url;
   recipememo.innerHTML = recipe.memo;
+
+  updateUrlLink();
+
+  recipelist.querySelectorAll('button').forEach((button) => {
+    button.classList.remove('current-recipe');
+  });
+
+  const selectedButton = recipelist.querySelector<HTMLButtonElement>(`button[data-id='${recipe.id}']`);
+
+  selectedButton?.classList.add('current-recipe');
 }
 
 function renderList() {
@@ -88,6 +101,7 @@ function renderList() {
 
     recipeButton.type = 'button';
     recipeButton.textContent = recipe.title || 'タイトルなし';
+    recipeButton.dataset.id = String(recipe.id);
 
     recipeButton.addEventListener('click', () => {
       saveCurrentRecipe();
@@ -97,6 +111,9 @@ function renderList() {
     recipelist.appendChild(li);
     li.appendChild(recipeButton);
     })
+    const selectedButton = recipelist.querySelector<HTMLButtonElement>(`button[data-id='${selectedId}']`);
+
+    selectedButton?.classList.add('current-recipe');
 };
 
 addrecipe.addEventListener('click', () => {
@@ -110,15 +127,39 @@ addrecipe.addEventListener('click', () => {
   };
 
   recipes.push(recipe);
-  saveResipes();
+  saveRecipes();
   renderList();
   showRecipe(recipe);
 });
 
 title.addEventListener('input', saveCurrentRecipe);
-url1.addEventListener('input', saveCurrentRecipe);
 recipememo.addEventListener('input', saveCurrentRecipe);
     
 renderList();
 
+if(recipes.length > 0){
+  showRecipe(recipes[0]);
+}
+
+
+//urlの読み込み 内容を理解する必要がある
+function updateUrlLink() {
+  const value = url1.value.trim();
+
+  // http:// または https:// のURLだけリンクにする
+  if (value.startsWith("https://") || value.startsWith("http://")) {
+    urlLink.href = value;
+    urlLink.textContent = "URLを開く";
+    urlLink.hidden = false;
+  } else {
+    urlLink.removeAttribute("href");
+    urlLink.textContent = "";
+    urlLink.hidden = true;
+  }
+}
+
+url1.addEventListener("input", () => {
+  saveCurrentRecipe();
+  updateUrlLink();
+});
 

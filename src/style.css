@@ -22,14 +22,13 @@ main {
   flex-direction: column;
 }
 
-#recipememo {
-  /* width: 100vw;
-  height:100vh; */
-  box-sizing: border-box;
-  resize:none;
+#url1 {
+  width:500px;
 }
 
 #recipememo {
+
+
   background-color: #fff;
   color:#000;
   width: 500px;
