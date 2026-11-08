@@ -33,6 +33,9 @@ main {
   color:#000;
   width: 500px;
   height: 400px;
+  caret-color: #000;
+  cursor: text;
+  min-height: 200px;
 }
 
 #recipememo img {
